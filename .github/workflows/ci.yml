@@ -1,14 +1,6 @@
 name: ci
 
-on:
-  push:
-    branches:
-      - main
-      - master
-  pull_request:
-    branches:
-      - main
-      - master
+on: [push, pull_request]
 
 jobs:
   ci:
@@ -50,3 +42,14 @@ jobs:
 
       - name: Run tests 🧪
         run: yarn test
+
+      - name: Run Cypress 🌎
+        run: yarn cypress
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: Cypress logs
+          path: |
+            cypress/videos
